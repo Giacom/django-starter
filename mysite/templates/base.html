@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>{% block title %}TITLE MISSING{% endblock title %}</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1"/>
+       <link rel="icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+       <style>
+            body {
+                margin: 0;
+                color: white;
+                background-color: rgb(50, 50, 80);
+                font-family:Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            .content-wrapper {
+                background-color: #fff;
+                min-height: 800px;
+            }
+
+            main {
+                color: black;
+                padding: 50px;
+            }
+
+            main > * {
+                padding: 10px 10px;
+            }
+
+            nav {
+                display: flex;
+                background-color: #333;
+            }
+
+            nav > * {
+                text-decoration: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                color: white;
+    
+                padding: 20px 20px;
+                flex-shrink: 0;
+            }
+
+            .end {
+                margin-left: auto;
+            }
+
+            nav > a:hover:not(.mobile-menu-toggle) {
+                background-color: #ddd;
+                color: black;
+            }
+
+            /* mobile */    
+            @media screen and (max-width: 900px) {
+                .desktop {
+                    display: none;
+                }
+            }
+
+            /* desktop */
+            @media not screen and (max-width: 900px) {
+                .mobile {
+                    display: none;
+                }
+                .mobile-menu {
+                    display: none;
+                }
+                .content-wrapper {
+                    margin: 0 5% 0 5%;
+                    margin-bottom: 100px;
+                }
+            }
+
+
+            section {
+                display: flex;
+                flex-flow: row wrap;
+            }
+
+            section > * {
+                background-color: #eee;
+                flex: 1 450px;
+                padding: 10px;
+                margin: 10px;
+            }
+
+            .photos {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .photos > img {
+                max-height: 200px;
+            }
+
+            .mobile-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .mobile-menu > a {
+                width: 100%;
+            }
+
+            .mobile-menu-collapsed {
+                display: none;
+            }
+
+            /* burger icon */
+            .mobile-menu-toggle > * {
+                width: 35px;
+                height: 1px;
+                background-color: rgb(255, 255, 255);
+                margin-bottom: 6px;
+            }
+
+       </style>
+
+    </head>
+
+    <body>
+        <div class="content-wrapper">
+            <nav class="desktop">
+                <a href="/" class="home">HOME</a>
+                {% include "links.html" %}
+                <span class="end">AT</a>
+            </nav>
+            <nav class="mobile">
+                <a href="/" class="home">HOME</a>
+                <a href="#" class="end mobile-menu-toggle">
+                    <!-- Burger -->
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </a>
+            </nav>
+            <!-- <nav class="mobile-menu" style="display: none;"> -->
+            <nav class="mobile-menu mobile-menu-collapsed">
+                {% include "links.html" %}
+            </nav>
+            <main>
+                <header>Welcome!</header>
+              {% block content %}
+              {% endblock content %}
+            </main>
+        </div>
+
+        <script>
+            let mobileMenuBtn = document.querySelector(".mobile-menu-toggle");
+            mobileMenuBtn.addEventListener("click", function() {
+                let mobileMenu = document.querySelector(".mobile-menu");
+                mobileMenu.classList.toggle("mobile-menu-collapsed");
+            });
+        </script>
+    </body>
+
+</html>
